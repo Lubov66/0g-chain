@@ -267,7 +267,7 @@ type App struct {
 	packetForwardKeeper   *packetforwardkeeper.Keeper
 	evmKeeper             *evmkeeper.Keeper
 	evmutilKeeper         evmutilkeeper.Keeper
-	feeMarketKeeper       *feemarketkeeper.Keeper
+	feeMarketKeeper       feemarketkeeper.Keeper
 	upgradeKeeper         upgradekeeper.Keeper
 	evidenceKeeper        evidencekeeper.Keeper
 	transferKeeper        ibctransferkeeper.Keeper
@@ -313,7 +313,6 @@ func NewApp(
 	encodingConfig chainparams.EncodingConfig,
 	options Options,
 	bApp *baseapp.BaseApp,
-	setAbciProposalHandler func(feemarketKeeper FeeMarketKeeper) sdk.PrepareProposalHandler,
 ) *App {
 	appCodec := encodingConfig.Marshaler
 	legacyAmino := encodingConfig.Amino
@@ -490,6 +489,7 @@ func NewApp(
 		keys[feemarkettypes.StoreKey],
 		tkeys[feemarkettypes.TransientKey],
 		feemarketSubspace,
+		bApp.Mempool(),
 	)
 
 	app.evmutilKeeper = evmutilkeeper.NewKeeper(
@@ -902,10 +902,6 @@ func NewApp(
 	app.SetBeginBlocker(app.BeginBlocker)
 	app.SetEndBlocker(app.EndBlocker)
 
-	if setAbciProposalHandler != nil {
-		abciProposalHandler := setAbciProposalHandler(app.feeMarketKeeper)
-		bApp.SetPrepareProposal(abciProposalHandler)
-	}
 	// load store
 	if !options.SkipLoadLatest {
 		if err := app.LoadLatestVersion(); err != nil {
