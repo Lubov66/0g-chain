@@ -21,7 +21,7 @@ Continue reading [here](https://docs.0g.ai/intro) if you want to learn more abou
 - Network: high-performance, low-latency, and decentralized network
 
 ## Documentation
-- If you want to build with 0G's network, DA layer, inference serving, or storage SDK, please refer to the [Build with 0G Documentation](https://docs.0g.ai/build-with-0g/contracts).
+- If you want to build with 0G's network, DA layer, inference serving, or storage SDK, please refer to the [Build with 0G Documentation](https://docs.0g.ai/build-with-0g/contracts-on-0g/deploy-contracts).
 
 - If you want to run a validator node, DA node, or storage node, please refer to the [Run a Node Documentation](https://docs.0g.ai/run-a-node/overview).
 
